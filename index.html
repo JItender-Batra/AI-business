@@ -3,69 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NZ AI Orchestration | Digital Employees for Trade</title>
+    <title>NZ ORCHESTRA | Enterprise AI Automation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .hero-gradient { background: radial-gradient(circle at top right, #1e3a8a, transparent), radial-gradient(circle at bottom left, #1e1b4b, transparent); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050810; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-glow { background: radial-gradient(circle at 50% -20%, #1e40af, transparent); }
     </style>
 </head>
-<body class="text-slate-200 selection:bg-blue-500">
+<body class="text-slate-300">
 
-    <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
-        <div class="text-2xl font-extrabold tracking-tighter text-white">NZ<span class="text-blue-500">ORCHESTRA</span></div>
-        <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="#" class="hover:text-blue-400">The Gamut</a>
-            <a href="#" class="hover:text-blue-400">Security</a>
-            <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition">Get Started</a>
+    <nav class="flex justify-between items-center px-10 py-8 max-w-7xl mx-auto">
+        <div class="text-2xl font-extrabold text-white tracking-tighter">NZ<span class="text-blue-500">ORCHESTRA</span></div>
+        <div class="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-widest text-slate-400">
+            <a href="#" class="hover:text-blue-500 transition">Voice</a>
+            <a href="#" class="hover:text-blue-500 transition">Brain</a>
+            <a href="#" class="hover:text-blue-500 transition">Workflow</a>
         </div>
     </nav>
 
-    <section class="hero-gradient min-h-[80vh] flex flex-col justify-center items-center text-center px-4">
-        <span class="px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold mb-6 tracking-widest uppercase">2026 AI Standard</span>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-            Stop Losing Leads. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Deploy a Digital Employee.</span>
-        </h1>
-        <p class="max-w-2xl text-slate-400 text-lg mb-10">
-            We build the Voice, the Brain, and the Orchestration for Auckland's top businesses. 
-            24/7 reliability. NZ-local accents. Zero missed opportunities.
-        </p>
-        <div class="flex flex-col md:flex-row gap-4">
-            <button onclick="startVapi()" class="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl hover:bg-blue-50 transition shadow-xl flex items-center justify-center">
-                🎙️ Talk to our Agent "Mana"
-            </button>
-            <a href="#demo" class="px-8 py-4 glass text-white font-bold rounded-xl hover:bg-white/5 transition flex items-center justify-center">
-                See the Workflow
-            </a>
+    <section class="hero-glow pt-20 pb-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-8 tracking-tight leading-none">
+                The AI Gamut for <br><span class="text-blue-500">Auckland Trade.</span>
+            </h1>
+            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                We deploy "Digital Employees" that handle your phone, understand your business history, and automate your Xero & CRM workflows instantly.
+            </p>
+
+            <div class="flex flex-col items-center gap-4">
+                <button id="vapi-trigger" onclick="toggleVapi()" class="group relative px-12 py-6 bg-blue-600 text-white font-black text-xl rounded-2xl shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:bg-blue-700 transition-all hover:scale-105 active:scale-95 flex items-center gap-4">
+                    <span id="vapi-icon" class="text-2xl animate-pulse">🎙️</span>
+                    <span id="vapi-text">TALK TO OUR AI SPECIALIST</span>
+                </button>
+                <p class="text-xs text-slate-500 uppercase tracking-widest">Live latency demo • local nz accents</p>
+            </div>
         </div>
     </section>
 
-    <section class="py-24 px-8 max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-        <div class="glass p-8 rounded-3xl">
-            <div class="text-3xl mb-4 text-blue-500">🗣️</div>
-            <h3 class="text-xl font-bold mb-3">The Voice</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Low-latency Vapi/Telnyx integration. Agents that sound like your best receptionist, not a robot from 2023.</p>
+    <section class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 -mt-16">
+        <div class="glass-card p-10 rounded-3xl">
+            <h3 class="text-blue-500 font-black mb-4">01. THE VOICE</h3>
+            <p class="text-slate-400">24/7 lead capture using Telnyx SIP trunking for ultra-low latency and local +64 caller IDs.</p>
         </div>
-        <div class="glass p-8 rounded-3xl">
-            <div class="text-3xl mb-4 text-emerald-500">🧠</div>
-            <h3 class="text-xl font-bold mb-3">The Brain</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Custom LLMs trained on your Xero data, trade SOPs, and manuals. Predictable, safe, and 100% accurate.</p>
+        <div class="glass-card p-10 rounded-3xl">
+            <h3 class="text-emerald-500 font-black mb-4">02. THE BRAIN</h3>
+            <p class="text-slate-400">Trained on your specific company SOPs and 60+ years of history. No hallucinations, just facts.</p>
         </div>
-        <div class="glass p-8 rounded-3xl">
-            <div class="text-3xl mb-4 text-purple-500">⚙️</div>
-            <h3 class="text-xl font-bold mb-3">The Workflow</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">n8n orchestration that executes tasks. Quote in Xero, update HubSpot, and SMS the client via ClickSend—automatically.</p>
+        <div class="glass-card p-10 rounded-3xl">
+            <h3 class="text-purple-500 font-black mb-4">03. THE WORKFLOW</h3>
+            <p class="text-slate-400">Orchestration that connects voice outcomes directly to Xero, HubSpot, and ClickSend SMS.</p>
         </div>
     </section>
+
+    <footer class="py-20 text-center">
+        <p class="text-slate-600 text-sm">Compliant with the NZ Privacy Act 2020 • Powered by Vapi & Telnyx</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web"></script>
     <script>
-        const vapi = new Vapi('YOUR_PUBLIC_KEY');
-        function startVapi() {
-            vapi.start('YOUR_ASSISTANT_ID');
-        }
-    </script>
-</body>
-</html>
+        // REPLACE THESE TWO VALUES
+        const PUBLIC_KEY = 'REPLACE_WITH_VAPI_PUBLIC_KEY'; 
+        const ASSISTANT_ID = 'REPLACE_WITH_ASSISTANT_ID';
+
+        const vapi = new Vapi(PUBLIC_KEY);
+        let isCalling = false;
+
+        async function toggleVapi() {
+            const btn = document.getElementById('vapi-trigger');
+            const btnText = document.getElementById('vapi-text');
+            const btnIcon = document.getElementById('vapi-icon');
+
+            if (!isCalling) {
+                btnText.innerText = "CONNECTING...";
+                vapi.start(ASSISTANT_ID);
+                isCalling = true;
+            } else {
+                vapi.stop();
