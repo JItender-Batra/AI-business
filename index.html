@@ -1,53 +1,86 @@
-<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZ ORCHESTRA | AI Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050810; font-family: sans-serif; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-6">
+
+    <div class="max-w-2xl text-center">
+        <h1 class="text-5xl font-black mb-4">NZ<span class="text-blue-500">ORCHESTRA</span></h1>
+        <p class="text-slate-400 mb-10 text-lg">High-Latency Voice Orchestration for NZ Business.</p>
+
+        <button id="vapi-trigger" onclick="toggleVapi()" class="px-10 py-6 bg-blue-600 rounded-2xl font-bold text-xl shadow-2xl hover:scale-105 transition-all active:scale-95 flex items-center gap-4 mx-auto">
+            <span id="vapi-icon">🎙️</span>
+            <span id="vapi-text">TALK TO OUR AI</span>
+        </button>
+        
+        <p id="status-msg" class="mt-4 text-xs uppercase tracking-widest text-slate-500 font-bold italic"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web"></script>
     <script>
-        // 1. YOUR CREDENTIALS (PASTE CAREFULLY)
-        const PUBLIC_KEY = '32e82d18-c5ba-4ba6-98de-8d80337b0787'; 
-        const ASSISTANT_ID = '017a8940-056a-4ad5-9e35-1a4f467b7dd0';
+        // REPLACE THESE TWO ONLY
+        const MY_PUBLIC_KEY = '32e82d18-c5ba-4ba6-98de-8d80337b0787';
+        const MY_ASSISTANT_ID = '017a8940-056a-4ad5-9e35-1a4f467b7dd0';
 
-        // 2. INITIALIZE VAPI
-        const vapi = new Vapi(PUBLIC_KEY);
-        let isCalling = false;
+        let vapiInstance = null;
+        let activeCall = false;
 
-        // 3. THE TOGGLE FUNCTION
+        // Initialize immediately
+        try {
+            vapiInstance = new Vapi(MY_PUBLIC_KEY);
+            console.log("Vapi Initialized");
+        } catch (e) {
+            console.error("Vapi failed to load:", e);
+        }
+
         async function toggleVapi() {
-            const btnText = document.getElementById('vapi-text');
-            const btnIcon = document.getElementById('vapi-icon');
-            const btnElement = document.getElementById('vapi-trigger');
+            const btn = document.getElementById('vapi-trigger');
+            const txt = document.getElementById('vapi-text');
+            const status = document.getElementById('status-msg');
 
-            if (!isCalling) {
-                console.log("Attempting to connect to Vapi...");
-                btnText.innerText = "CONNECTING...";
+            if (!activeCall) {
+                txt.innerText = "CONNECTING...";
+                status.innerText = "Requesting Microphone...";
                 
                 try {
-                    await vapi.start(ASSISTANT_ID);
-                    isCalling = true;
+                    await vapiInstance.start(MY_ASSISTANT_ID);
+                    activeCall = true;
                 } catch (err) {
-                    console.error("Vapi Start Error:", err);
-                    alert("Connection failed. Check your console for details.");
+                    console.error(err);
+                    alert("Connection Error. Check your Vapi Key permissions.");
+                    txt.innerText = "TALK TO OUR AI";
                 }
             } else {
-                vapi.stop();
+                vapiInstance.stop();
             }
         }
 
-        // 4. LISTEN FOR CALL EVENTS TO UPDATE BUTTON
-        vapi.on('call-start', () => {
-            console.log("Call actually started");
-            document.getElementById('vapi-text').innerText = "LISTENING (CLICK TO END)";
-            document.getElementById('vapi-icon').innerText = "🟢";
-            document.getElementById('vapi-trigger').style.backgroundColor = "#ef4444"; // Red
+        // Listeners to update the UI
+        vapiInstance.on('call-start', () => {
+            document.getElementById('vapi-text').innerText = "LISTENING... (CLICK TO END)";
+            document.getElementById('vapi-trigger').style.backgroundColor = "#ef4444";
+            document.getElementById('status-msg').innerText = "Live Connection Active";
         });
 
-        vapi.on('call-end', () => {
-            console.log("Call ended");
-            document.getElementById('vapi-text').innerText = "TALK TO OUR AI SPECIALIST";
-            document.getElementById('vapi-icon').innerText = "🎙️";
-            document.getElementById('vapi-trigger').style.backgroundColor = "#2563eb"; // Blue
-            isCalling = false;
+        vapiInstance.on('call-end', () => {
+            document.getElementById('vapi-text').innerText = "TALK TO OUR AI";
+            document.getElementById('vapi-trigger').style.backgroundColor = "#2563eb";
+            document.getElementById('status-msg').innerText = "";
+            activeCall = false;
         });
 
-        vapi.on('error', (e) => {
-            console.error("Vapi Global Error:", e);
-            isCalling = false;
+        vapiInstance.on('error', (e) => {
+            console.error("Vapi Error:", e);
+            activeCall = false;
         });
     </script>
+</body>
+</html>
