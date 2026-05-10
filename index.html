@@ -2,91 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NZ ORCHESTRA | AI Voice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZ ORCHESTRA | Enterprise Voice AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050810; color: white; -webkit-tap-highlight-color: transparent; }
-        .hero-gradient { background: radial-gradient(circle at 50% 0%, #1e40af 0%, #050810 70%); }
+        body { background-color: #0B0B0B; color: #FFFFFF; font-family: 'Inter', sans-serif; }
+        .btn-orange { background-color: #FF6B00; transition: all 0.3s; }
+        .btn-orange:hover { background-color: #E66000; transform: translateY(-2px); }
+        .glass-card { background: #161616; border: 1px solid #262626; border-radius: 24px; }
+        .text-gradient { background: linear-gradient(to right, #FF6B00, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="hero-gradient min-h-screen flex flex-col items-center justify-center p-6 text-center">
+<body>
 
-    <div class="max-w-md w-full">
-        <h1 class="text-4xl font-black tracking-tighter mb-2">NZ<span class="text-blue-500">ORCHESTRA</span></h1>
-        <p class="text-slate-400 mb-12 text-sm uppercase tracking-[0.2em]">Enterprise Voice AI</p>
-
-        <button id="vapi-button" onclick="handleTap()" class="w-full py-8 bg-blue-600 rounded-3xl font-black text-2xl shadow-[0_0_50px_rgba(37,99,235,0.3)] transition-all active:scale-95 flex flex-col items-center justify-center gap-2">
-            <span id="btn-icon">🎙️</span>
-            <span id="btn-text">START CALL</span>
-        </button>
-        
-        <div id="mobile-status" class="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10 hidden">
-            <p id="status-text" class="text-blue-400 font-bold text-sm">INITIALIZING...</p>
+    <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+        <div class="text-2xl font-black">NZ<span class="text-[#FF6B00]">ORCHESTRA</span></div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+            <a href="#" class="hover:text-white">Product</a>
+            <a href="#" class="hover:text-white">Integrations</a>
+            <a href="#" class="hover:text-white">About</a>
         </div>
-    </div>
+        <button class="btn-orange px-6 py-2 rounded-full text-sm font-bold">BOOK A DEMO</button>
+    </nav>
+
+    <section class="max-w-5xl mx-auto text-center pt-20 pb-32 px-6">
+        <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+            AI Voice Agents That Work Like Your <span class="text-gradient">Best Tradies</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
+            Automate your site office with AI agents trained on your data. From customer bookings to Xero invoicing—all via voice.
+        </p>
+        
+        <div class="flex flex-col items-center gap-4">
+            <button id="vapi-btn" onclick="toggleCall()" class="btn-orange px-12 py-6 rounded-2xl text-2xl font-black shadow-2xl shadow-orange-900/20">
+                TALK TO THE AI
+            </button>
+            <p id="vapi-status" class="text-xs text-gray-500 uppercase tracking-widest font-bold italic">Ready for site-office demo</p>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-8">
+        <div class="glass-card p-10">
+            <div class="text-[#FF6B00] mb-4 text-sm font-bold uppercase">External-Facing</div>
+            <h3 class="text-3xl font-bold mb-4">Customer Reception</h3>
+            <p class="text-gray-400 leading-relaxed mb-8">Never miss another leak call. Our AI answers, quotes within your guardrails, and books the job directly into Fergus or SimPRO.</p>
+            <button class="border border-gray-700 px-6 py-2 rounded-full text-sm hover:bg-white hover:text-black transition">Learn More</button>
+        </div>
+        <div class="glass-card p-10">
+            <div class="text-[#FF6B00] mb-4 text-sm font-bold uppercase">Internal Automation</div>
+            <h3 class="text-3xl font-bold mb-4">The Voice Foreman</h3>
+            <p class="text-gray-400 leading-relaxed mb-8">Talk to your site office while you drive. "Close the Albany job, add 2 hours labor, and draft the Xero invoice." Hands-free admin.</p>
+            <button class="border border-gray-700 px-6 py-2 rounded-full text-sm hover:bg-white hover:text-black transition">Learn More</button>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-900 py-12 text-center text-gray-600 text-sm">
+        &copy; 2026 NZ ORCHESTRA | Auckland, New Zealand | Powered by Vapi & n8n
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web"></script>
     <script>
-        // --- CONFIGURATION ---
-        const PUBLIC_KEY = '32e82d18-c5ba-4ba6-98de-8d80337b0787';
-        const ASSISTANT_ID = '017a8940-056a-4ad5-9e35-1a4f467b7dd0';
+        const vapi = new Vapi('YOUR_PUBLIC_KEY');
+        let active = false;
 
-        const vapi = new Vapi(PUBLIC_KEY);
-        let callActive = false;
-
-        async function handleTap() {
-            const btn = document.getElementById('vapi-button');
-            const txt = document.getElementById('btn-text');
-            const statusDiv = document.getElementById('mobile-status');
-            const statusTxt = document.getElementById('status-text');
-
-            // 1. MOBILE AUDIO UNLOCK (Crucial for 2026 browsers)
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') {
-                await audioCtx.resume();
-            }
-
-            if (!callActive) {
-                statusDiv.classList.remove('hidden');
-                statusTxt.innerText = "REQUESTING MIC...";
-                txt.innerText = "CONNECTING...";
-                
+        async function toggleCall() {
+            const btn = document.getElementById('vapi-btn');
+            if(!active) {
+                btn.innerText = "CONNECTING...";
                 try {
-                    // 2. START THE STREAM
-                    await vapi.start(ASSISTANT_ID);
-                    callActive = true;
-                } catch (err) {
-                    console.error(err);
-                    statusTxt.innerText = "ERROR: MIC DENIED";
-                    txt.innerText = "TRY AGAIN";
-                    alert("Please allow microphone access in your browser settings.");
-                }
-            } else {
-                vapi.stop();
-            }
+                    await vapi.start('YOUR_ASSISTANT_ID');
+                    active = true;
+                } catch(e) { btn.innerText = "TALK TO THE AI"; }
+            } else { vapi.stop(); }
         }
 
-        // --- EVENT LISTENERS ---
         vapi.on('call-start', () => {
-            document.getElementById('btn-text').innerText = "END SESSION";
-            document.getElementById('btn-icon').innerText = "🛑";
-            document.getElementById('vapi-button').style.backgroundColor = "#ef4444";
-            document.getElementById('status-text').innerText = "LIVE CONNECTION ACTIVE";
+            document.getElementById('vapi-btn').innerText = "END CALL";
+            document.getElementById('vapi-btn').style.backgroundColor = "#333";
+            document.getElementById('vapi-status').innerText = "Live Connection Active";
         });
 
         vapi.on('call-end', () => {
-            document.getElementById('btn-text').innerText = "START CALL";
-            document.getElementById('btn-icon').innerText = "🎙️";
-            document.getElementById('vapi-button').style.backgroundColor = "#2563eb";
-            document.getElementById('mobile-status').classList.add('hidden');
-            callActive = false;
-        });
-
-        vapi.on('error', (e) => {
-            console.error("Vapi Error:", e);
-            document.getElementById('status-text').innerText = "CONNECTION FAILED";
-            callActive = false;
+            document.getElementById('vapi-btn').innerText = "TALK TO THE AI";
+            document.getElementById('vapi-btn').style.backgroundColor = "#FF6B00";
+            document.getElementById('vapi-status').innerText = "Ready for site-office demo";
+            active = false;
         });
     </script>
 </body>
