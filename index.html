@@ -3,154 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NZ ORCHESTRA | AI Voice SaaS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Voice AI Dispatcher for Auckland Tradies</title>
     <style>
-        body { 
-            background-color: #050505; 
-            color: #FFFFFF; 
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+        /* Base Styles & Typography */
+        :root {
+            --primary-color: #D32F2F; 
+            --dark-bg: #1A1A1A;
+            --light-bg: #F4F4F4;
+            --text-main: #333333;
+            --text-light: #FFFFFF;
         }
 
-        /* THE GRADIENT GLOWS (The "Replication" Secret) */
-        .glow-orange {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #FFFFFF;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #B71C1C;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-light);
+            color: var(--dark-bg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 100px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.9)), url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+        }
+
+        .hero p.subhead {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            color: #CCCCCC;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Agitation Section */
+        .agitation {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        .agitation h2 {
+            font-size: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+
+        .agitation p {
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+            font-size: 1.2rem;
+        }
+
+        /* Interactive Proof Section */
+        .interactive-proof {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .interactive-proof h2 {
+            font-size: 2.5rem;
+        }
+
+        .demo-widget {
+            background-color: #FFFFFF;
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 40px auto 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .demo-widget input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .demo-widget ul {
+            text-align: left;
+            margin-top: 20px;
+            list-style-type: none;
+            color: #666;
+        }
+
+        .demo-widget ul li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .demo-widget ul li::before {
+            content: '✓';
+            color: var(--primary-color);
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, rgba(255, 107, 0, 0) 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
+            left: 0;
+            font-weight: bold;
         }
 
-        .glow-white {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: -1;
+        /* Features Section */
+        .features {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 80px 0;
         }
 
-        /* GLASS CARD EFFECT */
-        .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
         }
 
-        .btn-gradient {
-            background: linear-gradient(135deg, #FF6B00 0%, #FF8A3D 100%);
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
-            transition: all 0.3s ease;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
         }
 
-        .btn-gradient:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(255, 107, 0, 0.5);
+        .feature-card {
+            background-color: #2A2A2A;
+            padding: 30px;
+            border-radius: 8px;
         }
 
-        /* TEXT GRADIENT */
-        .text-orange-gradient {
-            background: linear-gradient(to bottom, #FFFFFF 30%, #FF6B00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            color: #555;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .risk-reversal {
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: #888;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p.subhead {
+                font-size: 1.2rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body class="relative">
+<body>
 
-    <div class="glow-orange top-[-200px] left-[-100px]"></div>
-    <div class="glow-white top-[20% ] right-[-100px]"></div>
-    <div class="glow-orange bottom-[-200px] right-[10%]"></div>
-
-    <nav class="max-w-7xl mx-auto flex justify-between items-center px-8 py-10">
-        <div class="text-2xl font-black tracking-tighter">NZ <span class="text-[#FF6B00]">ORCHESTRA</span></div>
-        <button class="bg-white/5 border border-white/10 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/10 transition">Login</button>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-6 pt-20 pb-40 text-center relative">
-        <div class="inline-block px-4 py-1.5 mb-6 border border-[#FF6B00]/30 rounded-full bg-[#FF6B00]/5 text-[#FF6B00] text-xs font-bold tracking-widest">
-            2026 AI AGENT ORCHESTRATION
-        </div>
-        
-        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-orange-gradient">
-            Voice AI That <br>Actually Works.
-        </h1>
-        
-        <p class="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-            Stop losing leads to voicemail. NZ Orchestra deploys high-latency, Kiwi-accented AI agents that sync directly with <span class="text-white font-bold italic">Xero & Fergus</span>.
-        </p>
-
-        <div class="flex flex-col items-center gap-6">
-            <button id="vapi-btn" onclick="toggleCall()" class="btn-gradient px-12 py-7 rounded-3xl text-2xl font-black flex items-center gap-4">
-                <span id="btn-icon">🎙️</span>
-                <span id="btn-text">TALK TO OUR AI</span>
-            </button>
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <p id="status-msg" class="text-[10px] text-gray-500 uppercase font-black tracking-widest">System Online: Auckland North Region</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>How Auckland Tradies Are Booking Jobs While Their Hands Are Full.</h1>
+            <p class="subhead">Stop losing leads to the competitor who answered the phone first. Meet the Voice AI that answers calls, understands Kiwi accents, and smartly schedules bookings straight into your calendar while you stay on the tools.</p>
+            <div class="hero-buttons">
+                <a href="#demo" class="btn">Hear It In Action (Play Audio)</a>
+                <a href="#demo" class="btn btn-outline">Try the Live Voice Agent</a>
             </div>
-        </div>
-    </main>
-
-    <section class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 pb-40">
-        <div class="glass-card p-12 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 p-8 text-6xl opacity-10 font-black">01</div>
-            <h3 class="text-3xl font-bold mb-4">OmniServe</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">Managed customer enquiries, bookings, and payments across voice and SMS. Trained on your specific trade workflows.</p>
-            <ul class="text-sm text-gray-300 space-y-3 mb-10">
-                <li class="flex items-center gap-2">🧡 Missed Call Automation</li>
-                <li class="flex items-center gap-2">🧡 Real-time Quote Drafting</li>
-            </ul>
-            <button class="w-full py-4 bg-white/5 border border-white/10 rounded-xl font-bold hover:bg-white hover:text-black transition-all">View Product</button>
-        </div>
-
-        <div class="glass-card p-12 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-8 text-6xl opacity-10 font-black">02</div>
-            <h3 class="text-3xl font-bold mb-4">OpsMate</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">Internal voice-foreman for your team. Sync site notes, travel time, and material logs directly to Fergus via hands-free voice.</p>
-            <ul class="text-sm text-gray-300 space-y-3 mb-10">
-                <li class="flex items-center gap-2">🧡 Xero / Fergus Direct Sync</li>
-                <li class="flex items-center gap-2">🧡 GPS-Triggered Job Logging</li>
-            </ul>
-            <button class="w-full py-4 bg-white/5 border border-white/10 rounded-xl font-bold hover:bg-white hover:text-black transition-all">View Product</button>
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web"></script>
-    <script>
-        const vapi = new Vapi('YOUR_PUBLIC_KEY');
-        let active = false;
+    <!-- Agitation Section -->
+    <section class="agitation">
+        <div class="container">
+            <h2>The Most Expensive Sound in Your Ute is a Ringing Phone You Can't Answer.</h2>
+            <p>Every time your phone rings while you are under a sink, on a roof, or driving across the Harbour Bridge, you face a choice: drop what you are doing to answer it, or let it go to voicemail.</p>
+            <p>If it goes to voicemail, that prospect is already calling the next business on Google.</p>
+            <p>You do not need another receptionist who clocks out at 5:00 PM. You need a system that captures every lead, qualifies the job, and books it into your schedule without you lifting a finger.</p>
+        </div>
+    </section>
 
-        async function toggleCall() {
-            const btn = document.getElementById('vapi-btn');
-            const txt = document.getElementById('btn-text');
-            if(!active) {
-                txt.innerText = "CONNECTING...";
-                try {
-                    await vapi.start('YOUR_ASSISTANT_ID');
-                    active = true;
-                } catch(e) { txt.innerText = "TALK TO OUR AI"; }
-            } else { vapi.stop(); }
-        }
+    <!-- Interactive Proof Section -->
+    <section id="demo" class="interactive-proof">
+        <div class="container">
+            <h2>Don't Take Our Word For It. Call Your New AI Dispatcher Right Now.</h2>
+            <p>Type your number below. Our Voice AI will call you. Act like a customer with a leaky roof or a blown fuse who needs someone out this Tuesday.</p>
+            
+            <div class="demo-widget">
+                <input type="tel" placeholder="Enter your mobile number (e.g., 021...)">
+                <button class="btn" style="width: 100%;">Call Me Now</button>
+                <ul>
+                    <li>Answers on the first ring, 24/7.</li>
+                    <li>Speaks naturally and understands local slang.</li>
+                    <li>Cross-checks availability and proposes smart slots.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-        vapi.on('call-start', () => {
-            document.getElementById('btn-text').innerText = "END SESSION";
-            document.getElementById('vapi-btn').style.background = "#333";
-            document.getElementById('status-msg').innerText = "LIVE: DATA SYNCING TO n8n WORKFLOW";
-        });
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>How the Smart Scheduling Engine Actually Works</h2>
+            <div class="grid">
+                <div class="feature-card">
+                    <h3>1. Intelligent Voice Capture</h3>
+                    <p>When a client calls, the Voice AI answers. It asks the right questions to gauge the urgency and scope of the job, capturing all the details accurately without sounding like a robot.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>2. Smart Diary Management</h3>
+                    <p>It does not just take messages; it actively schedules. The AI reads your live calendar, calculates travel time between Auckland suburbs, and offers the client the most efficient booking slots.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>3. Seamless Fergus Sync</h3>
+                    <p>Once the client agrees, the job is instantly pushed into your existing workflow. The job appears seamlessly inside Fergus with full transcripts and client details ready to go.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        vapi.on('call-end', () => {
-            document.getElementById('btn-text').innerText = "TALK TO OUR AI";
-            document.getElementById('vapi-btn').style.background = "linear-gradient(135deg, #FF6B00 0%, #FF8A3D 100%)";
-            document.getElementById('status-msg').innerText = "System Online: Auckland North Region";
-            active = false;
-        });
-    </script>
+    <!-- Social Proof & Risk Reversal -->
+    <section class="social-proof">
+        <div class="container">
+            <blockquote>
+                "I used to spend my evenings returning calls and writing up quotes from voicemails. Now, I finish a job, get in the van, and see three new jobs perfectly scheduled for next week. It's like having a full-time dispatcher who never sleeps."<br>
+                <br><strong>— Mark T., Auckland Plumber</strong>
+            </blockquote>
+            
+            <div class="risk-reversal">
+                <h2>Get Your Time Back. Risk-Free.</h2>
+                <p>Setting up the Voice AI takes less than an hour. We map it to your specific services, your pricing guidelines, and your calendar. If it doesn't save you at least 10 hours of admin work in the first 14 days, you pay nothing.</p>
+            </div>
+            
+            <a href="#demo" class="btn">Build My Custom Voice Agent</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AI Tradie Dispatcher. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
